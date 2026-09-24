@@ -171,9 +171,15 @@ class DeploymentEngine extends EventEmitter {
 
         // Stage 1: Real Git Clone
         this.broadcastStatus(deploymentId, { status: 'BUILDING', stage: 'clone', progress: 15 });
-        await emitLog('clone', 'info', `Cloning repository ${project.repo_url} (branch: ${deployment.branch || 'main'})...`);
         
-        await this.runCommand('git', ['clone', '--depth', '1', '--branch', deployment.branch || 'main', project.repo_url, '.'], {
+        let cloneUrl = project.repo_url.trim();
+        if (!cloneUrl.startsWith('http://') && !cloneUrl.startsWith('https://') && !cloneUrl.startsWith('git@')) {
+          cloneUrl = `https://github.com/${cloneUrl}.git`;
+        }
+
+        await emitLog('clone', 'info', `Cloning repository ${cloneUrl} (branch: ${deployment.branch || 'main'})...`);
+        
+        await this.runCommand('git', ['clone', '--depth', '1', '--branch', deployment.branch || 'main', cloneUrl, '.'], {
           cwd: projectBuildDir,
           emitLog,
           stage: 'clone'
@@ -202,9 +208,21 @@ class DeploymentEngine extends EventEmitter {
 
         // Stage 3: Real Build Command
         this.broadcastStatus(deploymentId, { status: 'BUILDING', stage: 'build', progress: 65 });
-        const buildCmd = project.build_command || (hasPackageJson ? 'npm run build' : null);
         
-        if (buildCmd && hasPackageJson) {
+        let buildCmd = project.build_command;
+        if (hasPackageJson) {
+          try {
+            const pkg = JSON.parse(fs.readFileSync(path.join(projectBuildDir, 'package.json'), 'utf-8'));
+            if (!pkg.scripts || !pkg.scripts.build) {
+              if (buildCmd === 'npm run build') {
+                buildCmd = null; // No build script required for static/simple projects
+                await emitLog('build', 'info', `No "build" script detected in package.json. Serving project directly.`);
+              }
+            }
+          } catch {}
+        }
+        
+        if (buildCmd) {
           await emitLog('build', 'info', `Executing build command: "${buildCmd}"...`);
           const buildParts = buildCmd.split(' ');
           await this.runCommand(buildParts[0], buildParts.slice(1), {
