@@ -1,6 +1,7 @@
 # 🚀 DeployHub — Modern Developer Cloud Deployment Platform
 
 DeployHub is a full-stack developer platform where engineering teams can connect GitHub repositories, configure build environments, trigger automated multi-stage deployments, monitor live streaming terminal logs, and diagnose build failures using **Google Gemini AI**.
+
 ---
 
 ## ✨ Key Features
