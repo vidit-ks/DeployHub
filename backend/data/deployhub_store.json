@@ -15,7 +15,7 @@
       "root_dir": "/",
       "node_version": "20.x",
       "current_status": "LIVE",
-      "live_url": "https://create-react-app.deployhub.app",
+      "live_url": "http://localhost:5000/live/create-react-app/",
       "deploy_count": 2,
       "created_at": "2026-09-24T11:10:16.019Z",
       "updated_at": "2026-09-24T11:39:04.608Z"
@@ -35,7 +35,7 @@
       "root_dir": "/",
       "node_version": "20.x",
       "current_status": "FAILED",
-      "live_url": "https://vortex-ui.deployhub.app",
+      "live_url": "http://localhost:5000/live/vortex-design-system/",
       "deploy_count": 9,
       "created_at": "2026-09-21T10:28:56.188Z",
       "updated_at": "2026-09-24T10:13:56.188Z"
@@ -55,10 +55,10 @@
       "root_dir": "/",
       "node_version": "20.x",
       "current_status": "LIVE",
-      "live_url": "https://nexus-ai-studio.deployhub.app",
-      "deploy_count": 14,
+      "live_url": "http://localhost:5000/live/nexus-ai-studio/",
+      "deploy_count": 15,
       "created_at": "2026-09-17T10:28:56.187Z",
-      "updated_at": "2026-09-24T10:03:56.188Z"
+      "updated_at": "2026-09-24T20:48:03.251Z"
     },
     {
       "id": "proj_solaris_pay",
@@ -75,7 +75,7 @@
       "root_dir": "/",
       "node_version": "20.x",
       "current_status": "LIVE",
-      "live_url": "https://solaris-fintech.deployhub.app",
+      "live_url": "http://localhost:5000/live/solaris-fintech-core/",
       "deploy_count": 28,
       "created_at": "2026-09-10T10:28:56.188Z",
       "updated_at": "2026-09-24T08:28:56.188Z"
@@ -95,13 +95,30 @@
       "root_dir": "/",
       "node_version": "3.11",
       "current_status": "LIVE",
-      "live_url": "https://hyperion-vector.deployhub.app",
+      "live_url": "http://localhost:5000/live/hyperion-vector-engine/",
       "deploy_count": 6,
       "created_at": "2026-09-19T10:28:56.188Z",
       "updated_at": "2026-09-24T04:28:56.188Z"
     }
   ],
   "deployments": [
+    {
+      "id": "dep_1790282876133_pskf",
+      "project_id": "proj_nexus_ai",
+      "deployment_number": 15,
+      "commit_sha": "01781ab",
+      "commit_message": "Trigger test real deployment",
+      "commit_author": "Developer",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "manual",
+      "duration_seconds": 7,
+      "started_at": "2026-09-24T20:47:56.350Z",
+      "completed_at": "2026-09-24T20:48:03.250Z",
+      "live_url": "http://localhost:5000/live/nexus-ai-studio/",
+      "error_message": null,
+      "error_details": null
+    },
     {
       "id": "dep_1790249933281_t08r",
       "project_id": "proj_1790248216019_k5ei0",
@@ -115,7 +132,7 @@
       "duration_seconds": 11,
       "started_at": "2026-09-24T11:38:53.494Z",
       "completed_at": "2026-09-24T11:39:04.607Z",
-      "live_url": "https://create-react-app.deployhub.app",
+      "live_url": "http://localhost:5000/live/create-react-app/",
       "error_message": null,
       "error_details": null
     },
@@ -132,7 +149,7 @@
       "duration_seconds": 11,
       "started_at": "2026-09-24T11:10:16.338Z",
       "completed_at": "2026-09-24T11:10:27.447Z",
-      "live_url": "https://create-react-app.deployhub.app",
+      "live_url": "http://localhost:5000/live/create-react-app/",
       "error_message": null,
       "error_details": null
     },
@@ -149,7 +166,7 @@
       "duration_seconds": 32,
       "started_at": "2026-09-24T10:03:56.188Z",
       "completed_at": "2026-09-24T10:04:26.188Z",
-      "live_url": "https://nexus-ai-studio.deployhub.app",
+      "live_url": "http://localhost:5000/live/nexus-ai-studio/",
       "error_message": null,
       "error_details": null
     },
@@ -189,7 +206,7 @@
       "duration_seconds": 45,
       "started_at": "2026-09-24T08:28:56.188Z",
       "completed_at": "2026-09-24T08:29:41.188Z",
-      "live_url": "https://solaris-fintech.deployhub.app",
+      "live_url": "http://localhost:5000/live/solaris-fintech-core/",
       "error_message": null,
       "error_details": null
     },
@@ -206,7 +223,7 @@
       "duration_seconds": 52,
       "started_at": "2026-09-24T04:28:56.188Z",
       "completed_at": "2026-09-24T04:29:56.188Z",
-      "live_url": "https://hyperion-vector.deployhub.app",
+      "live_url": "http://localhost:5000/live/hyperion-vector-engine/",
       "error_message": null,
       "error_details": null
     }
@@ -563,6 +580,118 @@
       "log_level": "system",
       "stage": "health_check",
       "message": "✨ Deployment successfully routed to Edge Anycast: https://create-react-app.deployhub.app"
+    },
+    {
+      "id": 45,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:56.352Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "DeployHub High-Speed Engine v3.0 initialized."
+    },
+    {
+      "id": 46,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:56.353Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "Deploying target project: Nexus AI Studio (nexus-ai-studio)"
+    },
+    {
+      "id": 47,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:56.864Z",
+      "log_level": "command",
+      "stage": "clone",
+      "message": "$ git clone https://github.com/developer/nexus-ai-studio --branch main --depth 1"
+    },
+    {
+      "id": 48,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:57.480Z",
+      "log_level": "info",
+      "stage": "clone",
+      "message": "Cloned revision 01781ab (commit: \"Trigger test real deployment\")"
+    },
+    {
+      "id": 49,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:57.983Z",
+      "log_level": "command",
+      "stage": "install",
+      "message": "$ npm install --prefer-offline --no-audit"
+    },
+    {
+      "id": 50,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:58.690Z",
+      "log_level": "info",
+      "stage": "install",
+      "message": "added 348 packages in 2.14s (cache hit rate 98.4%)"
+    },
+    {
+      "id": 51,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:47:59.291Z",
+      "log_level": "command",
+      "stage": "build",
+      "message": "$ npm run build"
+    },
+    {
+      "id": 52,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:00.095Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "▲ Bundling application for production..."
+    },
+    {
+      "id": 53,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:00.704Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "✓ Created .next assets (chunks: 4, total: 248 kB gzip)"
+    },
+    {
+      "id": 54,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:01.219Z",
+      "log_level": "system",
+      "stage": "containerize",
+      "message": "Creating isolated container sandbox deployhub/nexus-ai-studio:01781ab..."
+    },
+    {
+      "id": 55,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:01.827Z",
+      "log_level": "info",
+      "stage": "containerize",
+      "message": "Image digest: sha256:4a81f32c019a... (size: 42MB)"
+    },
+    {
+      "id": 56,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:02.341Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "Binding container to DeployHub Edge Proxy at: http://localhost:5000/live/nexus-ai-studio/"
+    },
+    {
+      "id": 57,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:02.843Z",
+      "log_level": "info",
+      "stage": "health_check",
+      "message": "Probing GET http://localhost:5000/live/nexus-ai-studio/ -> HTTP 200 OK (Latency: 6ms)"
+    },
+    {
+      "id": 58,
+      "deployment_id": "dep_1790282876133_pskf",
+      "timestamp": "2026-09-24T20:48:03.250Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "✨ Application successfully deployed and live at: http://localhost:5000/live/nexus-ai-studio/"
     }
   ],
   "environment_variables": [

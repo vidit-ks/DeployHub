@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/StatusBadge';
+import LivePreviewModal from '../components/LivePreviewModal';
 import { useApp } from '../context/AppContext';
 
 export default function DashboardOverview() {
@@ -40,6 +41,7 @@ export default function DashboardOverview() {
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [previewModal, setPreviewModal] = useState({ isOpen: false, url: '', title: '' });
 
   useEffect(() => {
     loadDashboardData();
@@ -244,14 +246,26 @@ export default function DashboardOverview() {
               </div>
 
               <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs">
-                <a
-                  href={project.live_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-pink-400 hover:text-pink-300 flex items-center gap-1 text-[11px] font-mono truncate max-w-[120px]"
-                >
-                  Visit <ExternalLink className="w-3 h-3" />
-                </a>
+                {project.live_url ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setPreviewModal({ isOpen: true, url: project.live_url, title: project.name })}
+                      className="text-pink-400 hover:text-pink-300 flex items-center gap-1 text-[11px] font-mono hover:underline"
+                    >
+                      <span>Preview</span>
+                    </button>
+                    <a
+                      href={project.live_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-zinc-500 hover:text-zinc-300"
+                      title="Open in new tab"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                ) : <span className="text-zinc-600 text-[11px] font-mono">Not live</span>}
+
                 <button
                   onClick={() => handleQuickDeploy(project.id)}
                   className="px-2.5 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/30 text-[11px] font-medium flex items-center gap-1 transition-colors"
@@ -429,6 +443,14 @@ export default function DashboardOverview() {
           </div>
         </div>
       </div>
+
+      {/* Fullscreen Live Preview Modal */}
+      <LivePreviewModal
+        isOpen={previewModal.isOpen}
+        onClose={() => setPreviewModal({ isOpen: false, url: '', title: '' })}
+        liveUrl={previewModal.url}
+        title={previewModal.title}
+      />
     </div>
   );
 }

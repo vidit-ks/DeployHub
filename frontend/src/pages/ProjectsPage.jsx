@@ -24,6 +24,7 @@ import {
 import api from '../services/api';
 import StatusBadge from '../components/StatusBadge';
 import GithubIcon from '../components/GithubIcon';
+import LivePreviewModal from '../components/LivePreviewModal';
 import { useApp } from '../context/AppContext';
 
 export default function ProjectsPage() {
@@ -35,7 +36,8 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFramework, setSelectedFramework] = useState('ALL');
   
-  // Selected project for Settings/Env Drawer
+  // Selected project for Live Preview & Settings/Env Drawer
+  const [previewProject, setPreviewProject] = useState(null);
   const [activeProject, setActiveProject] = useState(null);
   const [envVars, setEnvVars] = useState([]);
   const [newKey, setNewKey] = useState('');
@@ -247,16 +249,23 @@ export default function ProjectsPage() {
 
               {/* Live URL */}
               {project.live_url && (
-                <div className="pt-2">
+                <div className="pt-2 flex items-center justify-between gap-2">
                   <a
                     href={project.live_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-mono text-pink-400 hover:text-pink-300 hover:underline truncate max-w-full"
+                    className="inline-flex items-center gap-1 text-xs font-mono text-pink-400 hover:text-pink-300 hover:underline truncate max-w-[200px]"
                   >
-                    {project.live_url.replace('https://', '')}
+                    {project.live_url.replace('http://', '').replace('https://', '')}
                     <ExternalLink className="w-3 h-3 shrink-0" />
                   </a>
+
+                  <button
+                    onClick={() => setPreviewProject(project)}
+                    className="px-2 py-0.5 rounded-md bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/30 text-[11px] font-mono flex items-center gap-1 transition-colors"
+                  >
+                    <span>Preview</span>
+                  </button>
                 </div>
               )}
             </div>
@@ -281,6 +290,15 @@ export default function ProjectsPage() {
               </div>
 
               <div className="flex items-center gap-2">
+                {project.live_url && (
+                  <button
+                    onClick={() => setPreviewProject(project)}
+                    className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-pink-500/40 text-xs font-semibold text-zinc-200 flex items-center gap-1 transition-colors"
+                  >
+                    <span>Live App</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+                )}
                 <button
                   onClick={() => handleDeploy(project.id)}
                   className="btn-neon-pink px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5"
@@ -443,6 +461,14 @@ export default function ProjectsPage() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Fullscreen Live Preview Modal */}
+      <LivePreviewModal
+        isOpen={!!previewProject}
+        onClose={() => setPreviewProject(null)}
+        liveUrl={previewProject?.live_url}
+        title={previewProject?.name}
+      />
     </div>
   );
 }

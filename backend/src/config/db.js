@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import { generateTemplateApp } from '../routes/live.js';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-// Default Seed Data for immediate WOW experience
+// Default Seed Data with REAL Live Endpoints
 const INITIAL_DATA = {
   projects: [
     {
@@ -30,11 +31,11 @@ const INITIAL_DATA = {
       framework: 'Next.js',
       build_command: 'npm run build',
       start_command: 'npm start',
-      output_dir: '.next',
+      output_dir: 'dist',
       root_dir: '/',
       node_version: '20.x',
       current_status: 'LIVE',
-      live_url: 'https://nexus-ai-studio.deployhub.app',
+      live_url: 'http://localhost:5000/live/nexus-ai-studio/',
       deploy_count: 14,
       created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
       updated_at: new Date(Date.now() - 1000 * 60 * 25).toISOString()
@@ -54,7 +55,7 @@ const INITIAL_DATA = {
       root_dir: '/',
       node_version: '20.x',
       current_status: 'LIVE',
-      live_url: 'https://solaris-fintech.deployhub.app',
+      live_url: 'http://localhost:5000/live/solaris-fintech-core/',
       deploy_count: 28,
       created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14).toISOString(),
       updated_at: new Date(Date.now() - 1000 * 60 * 120).toISOString()
@@ -74,7 +75,7 @@ const INITIAL_DATA = {
       root_dir: '/',
       node_version: '20.x',
       current_status: 'FAILED',
-      live_url: 'https://vortex-ui.deployhub.app',
+      live_url: 'http://localhost:5000/live/vortex-design-system/',
       deploy_count: 9,
       created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
       updated_at: new Date(Date.now() - 1000 * 60 * 15).toISOString()
@@ -90,11 +91,11 @@ const INITIAL_DATA = {
       framework: 'Python',
       build_command: 'pip install -r requirements.txt',
       start_command: 'uvicorn main:app --host 0.0.0.0 --port 8000',
-      output_dir: '.',
+      output_dir: 'dist',
       root_dir: '/',
       node_version: '3.11',
       current_status: 'LIVE',
-      live_url: 'https://hyperion-vector.deployhub.app',
+      live_url: 'http://localhost:5000/live/hyperion-vector-engine/',
       deploy_count: 6,
       created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
       updated_at: new Date(Date.now() - 1000 * 60 * 360).toISOString()
@@ -114,7 +115,7 @@ const INITIAL_DATA = {
       duration_seconds: 32,
       started_at: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
       completed_at: new Date(Date.now() - 1000 * 60 * 24.5).toISOString(),
-      live_url: 'https://nexus-ai-studio.deployhub.app',
+      live_url: 'http://localhost:5000/live/nexus-ai-studio/',
       error_message: null,
       error_details: null
     },
@@ -154,7 +155,7 @@ const INITIAL_DATA = {
       duration_seconds: 45,
       started_at: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
       completed_at: new Date(Date.now() - 1000 * 60 * 119.25).toISOString(),
-      live_url: 'https://solaris-fintech.deployhub.app',
+      live_url: 'http://localhost:5000/live/solaris-fintech-core/',
       error_message: null,
       error_details: null
     },
@@ -171,7 +172,7 @@ const INITIAL_DATA = {
       duration_seconds: 52,
       started_at: new Date(Date.now() - 1000 * 60 * 360).toISOString(),
       completed_at: new Date(Date.now() - 1000 * 60 * 359).toISOString(),
-      live_url: 'https://hyperion-vector.deployhub.app',
+      live_url: 'http://localhost:5000/live/hyperion-vector-engine/',
       error_message: null,
       error_details: null
     }
@@ -183,7 +184,7 @@ const INITIAL_DATA = {
       timestamp: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
       log_level: 'system',
       stage: 'clone',
-      message: 'DeployHub Engine v2.4 initialized. Worker node: us-east-worker-04'
+      message: 'DeployHub Engine v3.0 initialized. Worker node: us-east-worker-04'
     },
     {
       id: 2,
@@ -215,7 +216,7 @@ const INITIAL_DATA = {
       timestamp: new Date(Date.now() - 1000 * 60 * 25 + 11000).toISOString(),
       log_level: 'info',
       stage: 'install',
-      message: 'added 428 packages in 6.84s (cache hit rate 94.2%)'
+      message: 'added 428 packages in 4.84s (cache hit rate 96.2%)'
     },
     {
       id: 6,
@@ -247,7 +248,7 @@ const INITIAL_DATA = {
       timestamp: new Date(Date.now() - 1000 * 60 * 25 + 26000).toISOString(),
       log_level: 'system',
       stage: 'containerize',
-      message: 'Building isolated OCI container artifact...'
+      message: 'Deploying isolated OCI container artifact to DeployHub Edge Proxy...'
     },
     {
       id: 10,
@@ -255,7 +256,7 @@ const INITIAL_DATA = {
       timestamp: new Date(Date.now() - 1000 * 60 * 25 + 29000).toISOString(),
       log_level: 'system',
       stage: 'health_check',
-      message: 'Starting container on internal port 3000... Ping HTTP GET /api/health -> 200 OK (8ms)'
+      message: 'Routing to live edge host http://localhost:5000/live/nexus-ai-studio/... Ping HTTP GET -> 200 OK (8ms)'
     },
     {
       id: 11,
@@ -263,64 +264,7 @@ const INITIAL_DATA = {
       timestamp: new Date(Date.now() - 1000 * 60 * 25 + 32000).toISOString(),
       log_level: 'system',
       stage: 'health_check',
-      message: '✨ Production deployment live: https://nexus-ai-studio.deployhub.app'
-    },
-    // Vortex Failed Logs
-    {
-      id: 20,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-      log_level: 'system',
-      stage: 'clone',
-      message: 'DeployHub Engine v2.4 initialized. Worker node: us-west-worker-02'
-    },
-    {
-      id: 21,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 1000).toISOString(),
-      log_level: 'command',
-      stage: 'clone',
-      message: '$ git clone https://github.com/developer/vortex-ui.git --branch develop --depth 1'
-    },
-    {
-      id: 22,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 3000).toISOString(),
-      log_level: 'command',
-      stage: 'install',
-      message: '$ npm install'
-    },
-    {
-      id: 23,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 8000).toISOString(),
-      log_level: 'command',
-      stage: 'build',
-      message: '$ npm run build'
-    },
-    {
-      id: 24,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 11000).toISOString(),
-      log_level: 'info',
-      stage: 'build',
-      message: 'vite v5.3.4 building for production...'
-    },
-    {
-      id: 25,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 15000).toISOString(),
-      log_level: 'error',
-      stage: 'build',
-      message: "error during build:\n[vite:load-fallback] Could not resolve '@radix-ui/react-tooltip' from 'src/components/Tooltip.tsx'\nfile: /app/src/components/Tooltip.tsx:4:31\n  2 | import React from 'react';\n  3 | import { cn } from '../utils';\n> 4 | import * as TooltipPrimitive from '@radix-ui/react-tooltip';\n    |                                    ^\n  5 | export const Tooltip = TooltipPrimitive.Root;"
-    },
-    {
-      id: 26,
-      deployment_id: 'dep_41_vortex',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15 + 18000).toISOString(),
-      log_level: 'error',
-      stage: 'build',
-      message: 'FATAL: Build exited with code 1. Deployment aborted.'
+      message: '✨ Production deployment live: http://localhost:5000/live/nexus-ai-studio/'
     }
   ],
   environment_variables: [
@@ -337,7 +281,7 @@ const INITIAL_DATA = {
       id: 'env_2',
       project_id: 'proj_nexus_ai',
       key: 'NEXT_PUBLIC_API_URL',
-      value: 'https://nexus-ai-studio.deployhub.app/api',
+      value: 'http://localhost:5000/live/nexus-ai-studio/api',
       environment: 'production',
       is_secret: false,
       created_at: new Date().toISOString()
@@ -369,14 +313,47 @@ class Database {
     this.usePostgres = false;
     this.pool = null;
     this.data = this.loadData();
+    this.ensureProjectBuilds();
     this.initPostgres();
+  }
+
+  ensureProjectBuilds() {
+    try {
+      if (this.data && Array.isArray(this.data.projects)) {
+        for (const p of this.data.projects) {
+          generateTemplateApp(p);
+        }
+      }
+    } catch (e) {
+      console.warn('Could not auto-generate builds:', e.message);
+    }
   }
 
   loadData() {
     try {
       if (fs.existsSync(DATA_FILE)) {
         const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        
+        // Migrate any old fake URLs to real local URLs
+        if (parsed.projects) {
+          parsed.projects.forEach(p => {
+            if (!p.live_url || p.live_url.includes('.deployhub.app')) {
+              p.live_url = `http://localhost:5000/live/${p.slug}/`;
+            }
+          });
+        }
+        if (parsed.deployments) {
+          parsed.deployments.forEach(d => {
+            if (d.live_url && d.live_url.includes('.deployhub.app')) {
+              const proj = parsed.projects?.find(p => p.id === d.project_id);
+              const slug = proj ? proj.slug : 'app';
+              d.live_url = `http://localhost:5000/live/${slug}/`;
+            }
+          });
+        }
+        this.saveData(parsed);
+        return parsed;
       }
     } catch (err) {
       console.warn('Could not read existing json store, using initial seed:', err.message);
@@ -410,11 +387,11 @@ class Database {
         this.usePostgres = true;
         console.log('✓ Connected to PostgreSQL database successfully.');
       } catch (err) {
-        console.warn('PostgreSQL connection not active. Running on high-performance local persistent store:', err.message);
+        console.warn('PostgreSQL connection not active. Running on persistent store:', err.message);
         this.usePostgres = false;
       }
     } else {
-      console.log('Running DeployHub on built-in persistent storage (PostgreSQL ready via DATABASE_URL).');
+      console.log('Running DeployHub on built-in persistent storage.');
     }
   }
 
@@ -428,10 +405,11 @@ class Database {
   }
 
   async createProject(project) {
+    const slug = project.slug || project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const newProject = {
       id: project.id || `proj_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       name: project.name,
-      slug: project.slug || project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      slug,
       description: project.description || '',
       repo_url: project.repo_url,
       repo_name: project.repo_name || project.repo_url.replace(/https?:\/\/github\.com\//, ''),
@@ -443,11 +421,15 @@ class Database {
       root_dir: project.root_dir || '/',
       node_version: project.node_version || '20.x',
       current_status: 'QUEUED',
-      live_url: `https://${(project.slug || project.name).toLowerCase().replace(/[^a-z0-9]+/g, '-')}.deployhub.app`,
+      live_url: `http://localhost:5000/live/${slug}/`,
       deploy_count: 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
+    
+    // Automatically prepare build folder for new project
+    generateTemplateApp(newProject);
+
     this.data.projects.unshift(newProject);
     this.saveData();
     return newProject;
@@ -494,6 +476,7 @@ class Database {
   async createDeployment(dep) {
     const project = await this.getProjectById(dep.project_id);
     const count = (project ? project.deploy_count : 0) + 1;
+    const slug = project ? project.slug : 'app';
 
     const newDep = {
       id: dep.id || `dep_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
@@ -508,7 +491,7 @@ class Database {
       duration_seconds: 0,
       started_at: new Date().toISOString(),
       completed_at: null,
-      live_url: project ? project.live_url : null,
+      live_url: `http://localhost:5000/live/${slug}/`,
       error_message: null,
       error_details: null
     };

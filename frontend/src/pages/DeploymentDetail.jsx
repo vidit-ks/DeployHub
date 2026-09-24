@@ -25,7 +25,9 @@ import confetti from 'canvas-confetti';
 import api from '../services/api';
 import StatusBadge from '../components/StatusBadge';
 import AIDiagnosisModal from '../components/AIDiagnosisModal';
+import LivePreviewModal from '../components/LivePreviewModal';
 import { useApp } from '../context/AppContext';
+import { Smartphone, Tablet, Monitor } from 'lucide-react';
 
 export default function DeploymentDetail() {
   const { id } = useParams();
@@ -36,6 +38,8 @@ export default function DeploymentDetail() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isLiveModalOpen, setIsLiveModalOpen] = useState(false);
+  const [viewTab, setViewTab] = useState('terminal'); // 'terminal' | 'preview'
   const [copiedLog, setCopiedLog] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
@@ -280,22 +284,30 @@ export default function DeploymentDetail() {
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
-              onClick={() => copyUrl(deployment.live_url)}
-              className="px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-700 hover:border-pink-500/40 text-xs font-semibold text-zinc-200 flex items-center gap-1.5 transition-colors"
+              onClick={() => setIsLiveModalOpen(true)}
+              className="btn-neon-pink px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.4)]"
             >
-              {copiedUrl ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copiedUrl ? 'Copied URL' : 'Copy URL'}</span>
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>Live App Preview</span>
             </button>
 
             <a
               href={deployment.live_url}
               target="_blank"
               rel="noreferrer"
-              className="btn-neon-pink px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.4)]"
+              className="px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-700 hover:border-pink-500/40 text-xs font-semibold text-zinc-200 flex items-center gap-1.5 transition-colors"
             >
-              <span>Open Application</span>
-              <ExternalLink className="w-4 h-4" />
+              <span>Open in Tab</span>
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
+
+            <button
+              onClick={() => copyUrl(deployment.live_url)}
+              className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-700 hover:border-pink-500/40 text-xs font-semibold text-zinc-200 flex items-center gap-1.5 transition-colors"
+              title="Copy Live URL"
+            >
+              {copiedUrl ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            </button>
           </div>
         </motion.div>
       )}
@@ -382,110 +394,185 @@ export default function DeploymentDetail() {
         </div>
       </div>
 
-      {/* Real Developer Live Terminal / Log Panel */}
-      <div className="rounded-2xl glass-panel border border-pink-500/25 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_35px_rgba(236,72,153,0.15)]">
-        {/* Terminal Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[#09090f] border-b border-zinc-800">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-600/40 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600/40 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600/40 inline-block" />
-            </div>
-            <div className="ml-2 flex items-center gap-1.5 text-xs font-mono text-zinc-300">
-              <Terminal className="w-4 h-4 text-pink-400" />
-              <span>DeployHub Container Terminal Stream</span>
-              {isBuilding && (
-                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] animate-pulse">
-                  Streaming Live
-                </span>
-              )}
-            </div>
-          </div>
+      {/* Main View Tabs (Terminal Stream vs Live Sandbox Preview) */}
+      <div className="flex items-center justify-between gap-3 border-b border-zinc-800 pb-2">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setViewTab('terminal')}
+            className={`px-4 py-2 rounded-xl text-xs font-mono font-semibold flex items-center gap-2 transition-all ${
+              viewTab === 'terminal'
+                ? 'bg-pink-500/20 text-pink-300 border border-pink-500/40 shadow-[0_0_15px_rgba(236,72,153,0.25)]'
+                : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Terminal className="w-4 h-4" />
+            <span>Terminal Logs ({filteredLogs.length})</span>
+          </button>
 
-          {/* Terminal Controls */}
-          <div className="flex items-center gap-2">
-            {/* Log Search Filter */}
-            <div className="relative">
-              <Search className="w-3 h-3 text-zinc-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Filter terminal output..."
-                value={logFilter}
-                onChange={(e) => setLogFilter(e.target.value)}
-                className="bg-zinc-900 border border-zinc-800 rounded-lg pl-7 pr-2.5 py-1 text-[11px] text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-pink-500 w-36 sm:w-48 font-mono"
-              />
-            </div>
-
-            {/* Auto-scroll toggle */}
+          {deployment.live_url && (
             <button
-              onClick={() => setAutoScroll(!autoScroll)}
-              className={`px-2 py-1 rounded-lg text-[11px] font-mono border transition-colors ${
-                autoScroll
-                  ? 'bg-pink-500/15 border-pink-500/30 text-pink-300'
-                  : 'bg-zinc-900 border-zinc-800 text-zinc-500'
+              onClick={() => setViewTab('preview')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-semibold flex items-center gap-2 transition-all ${
+                viewTab === 'preview'
+                  ? 'bg-pink-500/20 text-pink-300 border border-pink-500/40 shadow-[0_0_15px_rgba(236,72,153,0.25)]'
+                  : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
               }`}
             >
-              Auto-scroll
+              <Monitor className="w-4 h-4" />
+              <span>Live Application Sandbox</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </button>
+          )}
+        </div>
 
-            {/* Copy Logs */}
-            <button
-              onClick={copyAllLogs}
-              className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-              title="Copy All Logs"
-            >
-              {copiedLog ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-            </button>
+        {deployment.live_url && (
+          <button
+            onClick={() => setIsLiveModalOpen(true)}
+            className="text-xs font-mono text-pink-400 hover:text-pink-300 flex items-center gap-1 hover:underline"
+          >
+            <Maximize2 className="w-3.5 h-3.5" />
+            <span>Expand Fullscreen</span>
+          </button>
+        )}
+      </div>
 
-            {/* Download Logs */}
-            <button
-              onClick={downloadLogs}
-              className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-              title="Download Logs"
-            >
-              <Download className="w-3.5 h-3.5" />
-            </button>
+      {/* Tab 1: Terminal Log Panel */}
+      {viewTab === 'terminal' && (
+        <div className="rounded-2xl glass-panel border border-pink-500/25 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_35px_rgba(236,72,153,0.15)]">
+          {/* Terminal Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[#09090f] border-b border-zinc-800">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-600/40 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600/40 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600/40 inline-block" />
+              </div>
+              <div className="ml-2 flex items-center gap-1.5 text-xs font-mono text-zinc-300">
+                <Terminal className="w-4 h-4 text-pink-400" />
+                <span>DeployHub Container Terminal Stream</span>
+                {isBuilding && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] animate-pulse">
+                    Streaming Live
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Terminal Controls */}
+            <div className="flex items-center gap-2">
+              {/* Log Search Filter */}
+              <div className="relative">
+                <Search className="w-3 h-3 text-zinc-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Filter terminal output..."
+                  value={logFilter}
+                  onChange={(e) => setLogFilter(e.target.value)}
+                  className="bg-zinc-900 border border-zinc-800 rounded-lg pl-7 pr-2.5 py-1 text-[11px] text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-pink-500 w-36 sm:w-48 font-mono"
+                />
+              </div>
+
+              {/* Auto-scroll toggle */}
+              <button
+                onClick={() => setAutoScroll(!autoScroll)}
+                className={`px-2 py-1 rounded-lg text-[11px] font-mono border transition-colors ${
+                  autoScroll
+                    ? 'bg-pink-500/15 border-pink-500/30 text-pink-300'
+                    : 'bg-zinc-900 border-zinc-800 text-zinc-500'
+                }`}
+              >
+                Auto-scroll
+              </button>
+
+              {/* Copy Logs */}
+              <button
+                onClick={copyAllLogs}
+                className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+                title="Copy All Logs"
+              >
+                {copiedLog ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              </button>
+
+              {/* Download Logs */}
+              <button
+                onClick={downloadLogs}
+                className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+                title="Download Logs"
+              >
+                <Download className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Terminal Body */}
+          <div className="p-5 font-mono text-xs sm:text-[13px] leading-relaxed space-y-2 bg-[#060609] text-zinc-300 min-h-[380px] max-h-[520px] overflow-y-auto">
+            {filteredLogs.length === 0 ? (
+              <div className="py-12 text-center text-zinc-500 font-mono">
+                Waiting for container process stream...
+              </div>
+            ) : (
+              filteredLogs.map((l, idx) => {
+                const text = l.message || '';
+                const level = l.log_level;
+
+                let colorClass = 'text-zinc-300';
+                if (text.startsWith('$')) colorClass = 'text-pink-400 font-semibold';
+                else if (text.startsWith('✓') || text.includes('successful') || text.includes('LIVE')) colorClass = 'text-emerald-400 font-medium';
+                else if (text.startsWith('●')) colorClass = 'text-amber-300';
+                else if (text.startsWith('✕') || text.startsWith('FATAL') || text.includes('error') || level === 'error') colorClass = 'text-rose-400 font-semibold';
+                else if (text.startsWith('▲') || text.startsWith('✨')) colorClass = 'text-fuchsia-400 font-medium';
+                else if (level === 'system') colorClass = 'text-zinc-400';
+
+                return (
+                  <div key={l.id || idx} className="flex items-start gap-3 group">
+                    <span className="text-zinc-600 select-none text-[11px] w-6 text-right font-mono shrink-0">
+                      {idx + 1}
+                    </span>
+                    <span className="text-zinc-600 select-none text-[10px] shrink-0 font-mono hidden sm:inline">
+                      {new Date(l.timestamp).toLocaleTimeString([], { hour12: false })}
+                    </span>
+                    <span className={`break-all whitespace-pre-wrap ${colorClass}`}>
+                      {text}
+                    </span>
+                  </div>
+                );
+              })
+            )}
+            <div ref={terminalEndRef} />
           </div>
         </div>
+      )}
 
-        {/* Terminal Body */}
-        <div className="p-5 font-mono text-xs sm:text-[13px] leading-relaxed space-y-2 bg-[#060609] text-zinc-300 min-h-[380px] max-h-[520px] overflow-y-auto">
-          {filteredLogs.length === 0 ? (
-            <div className="py-12 text-center text-zinc-500 font-mono">
-              Waiting for container process stream...
+      {/* Tab 2: Live Embedded Preview */}
+      {viewTab === 'preview' && deployment.live_url && (
+        <div className="rounded-2xl glass-panel border border-pink-500/30 overflow-hidden shadow-2xl bg-[#08080f]">
+          <div className="p-3 bg-[#0a0a12] border-b border-zinc-800 flex items-center justify-between text-xs font-mono text-zinc-300">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-pink-300">{deployment.live_url}</span>
             </div>
-          ) : (
-            filteredLogs.map((l, idx) => {
-              const text = l.message || '';
-              const level = l.log_level;
-
-              let colorClass = 'text-zinc-300';
-              if (text.startsWith('$')) colorClass = 'text-pink-400 font-semibold';
-              else if (text.startsWith('✓') || text.includes('successful') || text.includes('LIVE')) colorClass = 'text-emerald-400 font-medium';
-              else if (text.startsWith('●')) colorClass = 'text-amber-300';
-              else if (text.startsWith('✕') || text.startsWith('FATAL') || text.includes('error') || level === 'error') colorClass = 'text-rose-400 font-semibold';
-              else if (text.startsWith('▲') || text.startsWith('✨')) colorClass = 'text-fuchsia-400 font-medium';
-              else if (level === 'system') colorClass = 'text-zinc-400';
-
-              return (
-                <div key={l.id || idx} className="flex items-start gap-3 group">
-                  <span className="text-zinc-600 select-none text-[11px] w-6 text-right font-mono shrink-0">
-                    {idx + 1}
-                  </span>
-                  <span className="text-zinc-600 select-none text-[10px] shrink-0 font-mono hidden sm:inline">
-                    {new Date(l.timestamp).toLocaleTimeString([], { hour12: false })}
-                  </span>
-                  <span className={`break-all whitespace-pre-wrap ${colorClass}`}>
-                    {text}
-                  </span>
-                </div>
-              );
-            })
-          )}
-          <div ref={terminalEndRef} />
+            <div className="flex items-center gap-2">
+              <a
+                href={deployment.live_url}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-neon-pink px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1"
+              >
+                <span>Open in Tab</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+          <div className="w-full h-[600px] bg-[#09090f]">
+            <iframe
+              src={deployment.live_url}
+              title="Live Deployed Sandbox"
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* AI Diagnosis Modal */}
       <AIDiagnosisModal
@@ -499,6 +586,14 @@ export default function DeploymentDetail() {
           buildCommand: deployment.project?.build_command || 'npm run build'
         }}
         onRedeploy={() => handleRedeploy(false)}
+      />
+
+      {/* Fullscreen Live Preview Modal */}
+      <LivePreviewModal
+        isOpen={isLiveModalOpen}
+        onClose={() => setIsLiveModalOpen(false)}
+        liveUrl={deployment.live_url}
+        title={deployment.project?.name || 'Live Application'}
       />
     </div>
   );

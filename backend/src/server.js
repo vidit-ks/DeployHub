@@ -6,6 +6,7 @@ import deploymentsRouter from './routes/deployments.js';
 import githubRouter from './routes/github.js';
 import aiRouter from './routes/ai.js';
 import metricsRouter from './routes/metrics.js';
+import liveRouter from './routes/live.js';
 
 dotenv.config();
 
@@ -34,6 +35,9 @@ app.use('/api/deployments', deploymentsRouter);
 app.use('/api/github', githubRouter);
 app.use('/api/ai', aiRouter);
 app.use('/api/metrics', metricsRouter);
+
+// Live Edge Hosting for Deployed Apps
+app.use('/live', liveRouter);
 
 // Base Health Check
 app.get('/api/health', (req, res) => {
