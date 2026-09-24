@@ -1,0 +1,626 @@
+{
+  "projects": [
+    {
+      "id": "proj_1790248216019_k5ei0",
+      "name": "create-react-app",
+      "slug": "create-react-app",
+      "description": "",
+      "repo_url": "https://github.com/facebook/create-react-app.git",
+      "repo_name": "facebook/create-react-app",
+      "branch": "main",
+      "framework": "React",
+      "build_command": "npm run build",
+      "start_command": "npm run preview",
+      "output_dir": "dist",
+      "root_dir": "/",
+      "node_version": "20.x",
+      "current_status": "LIVE",
+      "live_url": "https://create-react-app.deployhub.app",
+      "deploy_count": 2,
+      "created_at": "2026-09-24T11:10:16.019Z",
+      "updated_at": "2026-09-24T11:39:04.608Z"
+    },
+    {
+      "id": "proj_vortex_ui",
+      "name": "Vortex Design System",
+      "slug": "vortex-design-system",
+      "description": "Comprehensive React & Tailwind component library for SaaS",
+      "repo_url": "https://github.com/developer/vortex-ui",
+      "repo_name": "developer/vortex-ui",
+      "branch": "develop",
+      "framework": "React",
+      "build_command": "npm run build",
+      "start_command": "npm run preview",
+      "output_dir": "dist",
+      "root_dir": "/",
+      "node_version": "20.x",
+      "current_status": "FAILED",
+      "live_url": "https://vortex-ui.deployhub.app",
+      "deploy_count": 9,
+      "created_at": "2026-09-21T10:28:56.188Z",
+      "updated_at": "2026-09-24T10:13:56.188Z"
+    },
+    {
+      "id": "proj_nexus_ai",
+      "name": "Nexus AI Studio",
+      "slug": "nexus-ai-studio",
+      "description": "Next-generation AI prompt engineering and playground interface",
+      "repo_url": "https://github.com/developer/nexus-ai-studio",
+      "repo_name": "developer/nexus-ai-studio",
+      "branch": "main",
+      "framework": "Next.js",
+      "build_command": "npm run build",
+      "start_command": "npm start",
+      "output_dir": ".next",
+      "root_dir": "/",
+      "node_version": "20.x",
+      "current_status": "LIVE",
+      "live_url": "https://nexus-ai-studio.deployhub.app",
+      "deploy_count": 14,
+      "created_at": "2026-09-17T10:28:56.187Z",
+      "updated_at": "2026-09-24T10:03:56.188Z"
+    },
+    {
+      "id": "proj_solaris_pay",
+      "name": "Solaris Fintech Core",
+      "slug": "solaris-fintech-core",
+      "description": "Ultra-low latency microservice payment settlement gateway",
+      "repo_url": "https://github.com/developer/solaris-fintech-core",
+      "repo_name": "developer/solaris-fintech-core",
+      "branch": "main",
+      "framework": "Node.js",
+      "build_command": "npm run build:prod",
+      "start_command": "node dist/server.js",
+      "output_dir": "dist",
+      "root_dir": "/",
+      "node_version": "20.x",
+      "current_status": "LIVE",
+      "live_url": "https://solaris-fintech.deployhub.app",
+      "deploy_count": 28,
+      "created_at": "2026-09-10T10:28:56.188Z",
+      "updated_at": "2026-09-24T08:28:56.188Z"
+    },
+    {
+      "id": "proj_hyperion_api",
+      "name": "Hyperion Vector Engine",
+      "slug": "hyperion-vector-engine",
+      "description": "Distributed similarity search indexing engine in Rust & Python",
+      "repo_url": "https://github.com/developer/hyperion-vector",
+      "repo_name": "developer/hyperion-vector",
+      "branch": "main",
+      "framework": "Python",
+      "build_command": "pip install -r requirements.txt",
+      "start_command": "uvicorn main:app --host 0.0.0.0 --port 8000",
+      "output_dir": ".",
+      "root_dir": "/",
+      "node_version": "3.11",
+      "current_status": "LIVE",
+      "live_url": "https://hyperion-vector.deployhub.app",
+      "deploy_count": 6,
+      "created_at": "2026-09-19T10:28:56.188Z",
+      "updated_at": "2026-09-24T04:28:56.188Z"
+    }
+  ],
+  "deployments": [
+    {
+      "id": "dep_1790249933281_t08r",
+      "project_id": "proj_1790248216019_k5ei0",
+      "deployment_number": 2,
+      "commit_sha": "42e483f",
+      "commit_message": "Manual trigger deployment",
+      "commit_author": "Developer",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "manual",
+      "duration_seconds": 11,
+      "started_at": "2026-09-24T11:38:53.494Z",
+      "completed_at": "2026-09-24T11:39:04.607Z",
+      "live_url": "https://create-react-app.deployhub.app",
+      "error_message": null,
+      "error_details": null
+    },
+    {
+      "id": "dep_1790248216025_xjwr",
+      "project_id": "proj_1790248216019_k5ei0",
+      "deployment_number": 1,
+      "commit_sha": "774ea8b",
+      "commit_message": "Initial repository deployment",
+      "commit_author": "DeployHub Wizard",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "manual",
+      "duration_seconds": 11,
+      "started_at": "2026-09-24T11:10:16.338Z",
+      "completed_at": "2026-09-24T11:10:27.447Z",
+      "live_url": "https://create-react-app.deployhub.app",
+      "error_message": null,
+      "error_details": null
+    },
+    {
+      "id": "dep_42_nexus",
+      "project_id": "proj_nexus_ai",
+      "deployment_number": 42,
+      "commit_sha": "a81f32c",
+      "commit_message": "feat: add streaming tokens support & latency charts",
+      "commit_author": "Alex Chen",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "github_push",
+      "duration_seconds": 32,
+      "started_at": "2026-09-24T10:03:56.188Z",
+      "completed_at": "2026-09-24T10:04:26.188Z",
+      "live_url": "https://nexus-ai-studio.deployhub.app",
+      "error_message": null,
+      "error_details": null
+    },
+    {
+      "id": "dep_41_vortex",
+      "project_id": "proj_vortex_ui",
+      "deployment_number": 9,
+      "commit_sha": "e92bc41",
+      "commit_message": "fix: glassmorphism backdrop blur opacity filter",
+      "commit_author": "Sarah Jenkins",
+      "branch": "develop",
+      "status": "FAILED",
+      "trigger": "manual",
+      "duration_seconds": 18,
+      "started_at": "2026-09-24T10:13:56.188Z",
+      "completed_at": "2026-09-24T10:14:14.188Z",
+      "live_url": null,
+      "error_message": "Module not found: Can't resolve '@radix-ui/react-tooltip' in '/app/src/components/Tooltip.tsx'",
+      "error_details": {
+        "errorType": "ModuleResolutionError",
+        "missingModule": "@radix-ui/react-tooltip",
+        "file": "/app/src/components/Tooltip.tsx",
+        "line": 4,
+        "exitCode": 1
+      }
+    },
+    {
+      "id": "dep_40_solaris",
+      "project_id": "proj_solaris_pay",
+      "deployment_number": 28,
+      "commit_sha": "3f81aa2",
+      "commit_message": "perf: optimize redis caching layer and transaction locks",
+      "commit_author": "Marcus Vance",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "github_push",
+      "duration_seconds": 45,
+      "started_at": "2026-09-24T08:28:56.188Z",
+      "completed_at": "2026-09-24T08:29:41.188Z",
+      "live_url": "https://solaris-fintech.deployhub.app",
+      "error_message": null,
+      "error_details": null
+    },
+    {
+      "id": "dep_39_hyperion",
+      "project_id": "proj_hyperion_api",
+      "deployment_number": 6,
+      "commit_sha": "71d440b",
+      "commit_message": "feat: add cosine similarity metric endpoint",
+      "commit_author": "Alex Chen",
+      "branch": "main",
+      "status": "LIVE",
+      "trigger": "manual",
+      "duration_seconds": 52,
+      "started_at": "2026-09-24T04:28:56.188Z",
+      "completed_at": "2026-09-24T04:29:56.188Z",
+      "live_url": "https://hyperion-vector.deployhub.app",
+      "error_message": null,
+      "error_details": null
+    }
+  ],
+  "deployment_logs": [
+    {
+      "id": 1,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:03:56.188Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "DeployHub Engine v2.4 initialized. Worker node: us-east-worker-04"
+    },
+    {
+      "id": 2,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:03:57.188Z",
+      "log_level": "command",
+      "stage": "clone",
+      "message": "$ git clone https://github.com/developer/nexus-ai-studio.git --branch main --depth 1"
+    },
+    {
+      "id": 3,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:03:59.188Z",
+      "log_level": "info",
+      "stage": "clone",
+      "message": "Cloned revision a81f32c (commit: \"feat: add streaming tokens support\")"
+    },
+    {
+      "id": 4,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:00.189Z",
+      "log_level": "command",
+      "stage": "install",
+      "message": "$ npm install --prefer-offline --no-audit"
+    },
+    {
+      "id": 5,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:07.189Z",
+      "log_level": "info",
+      "stage": "install",
+      "message": "added 428 packages in 6.84s (cache hit rate 94.2%)"
+    },
+    {
+      "id": 6,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:08.189Z",
+      "log_level": "command",
+      "stage": "build",
+      "message": "$ npm run build"
+    },
+    {
+      "id": 7,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:11.189Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "▲ Next.js 14.2.5 - compiling static & dynamic routes..."
+    },
+    {
+      "id": 8,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:20.189Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "✓ Generating static pages (14/14) [100% in 3.4s]"
+    },
+    {
+      "id": 9,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:22.189Z",
+      "log_level": "system",
+      "stage": "containerize",
+      "message": "Building isolated OCI container artifact..."
+    },
+    {
+      "id": 10,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:25.189Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "Starting container on internal port 3000... Ping HTTP GET /api/health -> 200 OK (8ms)"
+    },
+    {
+      "id": 11,
+      "deployment_id": "dep_42_nexus",
+      "timestamp": "2026-09-24T10:04:28.189Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "✨ Production deployment live: https://nexus-ai-studio.deployhub.app"
+    },
+    {
+      "id": 20,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:13:56.189Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "DeployHub Engine v2.4 initialized. Worker node: us-west-worker-02"
+    },
+    {
+      "id": 21,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:13:57.189Z",
+      "log_level": "command",
+      "stage": "clone",
+      "message": "$ git clone https://github.com/developer/vortex-ui.git --branch develop --depth 1"
+    },
+    {
+      "id": 22,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:13:59.189Z",
+      "log_level": "command",
+      "stage": "install",
+      "message": "$ npm install"
+    },
+    {
+      "id": 23,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:14:04.189Z",
+      "log_level": "command",
+      "stage": "build",
+      "message": "$ npm run build"
+    },
+    {
+      "id": 24,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:14:07.189Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "vite v5.3.4 building for production..."
+    },
+    {
+      "id": 25,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:14:11.189Z",
+      "log_level": "error",
+      "stage": "build",
+      "message": "error during build:\n[vite:load-fallback] Could not resolve '@radix-ui/react-tooltip' from 'src/components/Tooltip.tsx'\nfile: /app/src/components/Tooltip.tsx:4:31\n  2 | import React from 'react';\n  3 | import { cn } from '../utils';\n> 4 | import * as TooltipPrimitive from '@radix-ui/react-tooltip';\n    |                                    ^\n  5 | export const Tooltip = TooltipPrimitive.Root;"
+    },
+    {
+      "id": 26,
+      "deployment_id": "dep_41_vortex",
+      "timestamp": "2026-09-24T10:14:14.189Z",
+      "log_level": "error",
+      "stage": "build",
+      "message": "FATAL: Build exited with code 1. Deployment aborted."
+    },
+    {
+      "id": 19,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:16.341Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "DeployHub Engine v2.4 initialized. Worker node: us-east-worker-9"
+    },
+    {
+      "id": 20,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:16.958Z",
+      "log_level": "command",
+      "stage": "clone",
+      "message": "$ git clone https://github.com/facebook/create-react-app.git --branch main --depth 1"
+    },
+    {
+      "id": 21,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:17.960Z",
+      "log_level": "info",
+      "stage": "clone",
+      "message": "Cloned revision 774ea8b (commit: \"Initial repository deployment\")"
+    },
+    {
+      "id": 22,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:18.676Z",
+      "log_level": "command",
+      "stage": "install",
+      "message": "$ npm install --prefer-offline --no-audit"
+    },
+    {
+      "id": 23,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:19.888Z",
+      "log_level": "info",
+      "stage": "install",
+      "message": "added 348 packages in 4.12s (cache hit rate 96.8%)"
+    },
+    {
+      "id": 24,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:20.697Z",
+      "log_level": "command",
+      "stage": "build",
+      "message": "$ npm run build"
+    },
+    {
+      "id": 25,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:21.903Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "▲ Bundling application for production..."
+    },
+    {
+      "id": 26,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:23.307Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "✓ Created dist assets (chunks: 6, total: 342 kB gzip)"
+    },
+    {
+      "id": 27,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:24.120Z",
+      "log_level": "system",
+      "stage": "containerize",
+      "message": "Creating container image deployhub/create-react-app:774ea8b..."
+    },
+    {
+      "id": 28,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:25.123Z",
+      "log_level": "info",
+      "stage": "containerize",
+      "message": "Image digest: sha256:7f83b1a403019f... (size: 84MB)"
+    },
+    {
+      "id": 29,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:25.926Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "Starting container sandbox on port :32049"
+    },
+    {
+      "id": 30,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:26.842Z",
+      "log_level": "info",
+      "stage": "health_check",
+      "message": "Probing GET /api/health -> HTTP 200 OK (latency: 12ms)"
+    },
+    {
+      "id": 31,
+      "deployment_id": "dep_1790248216025_xjwr",
+      "timestamp": "2026-09-24T11:10:27.446Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "✨ Deployment successfully routed to Edge Anycast: https://create-react-app.deployhub.app"
+    },
+    {
+      "id": 32,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:53.496Z",
+      "log_level": "system",
+      "stage": "clone",
+      "message": "DeployHub Engine v2.4 initialized. Worker node: us-east-worker-1"
+    },
+    {
+      "id": 33,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:54.108Z",
+      "log_level": "command",
+      "stage": "clone",
+      "message": "$ git clone https://github.com/facebook/create-react-app.git --branch main --depth 1"
+    },
+    {
+      "id": 34,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:55.120Z",
+      "log_level": "info",
+      "stage": "clone",
+      "message": "Cloned revision 42e483f (commit: \"Manual trigger deployment\")"
+    },
+    {
+      "id": 35,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:55.829Z",
+      "log_level": "command",
+      "stage": "install",
+      "message": "$ npm install --prefer-offline --no-audit"
+    },
+    {
+      "id": 36,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:57.041Z",
+      "log_level": "info",
+      "stage": "install",
+      "message": "added 348 packages in 4.12s (cache hit rate 96.8%)"
+    },
+    {
+      "id": 37,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:57.857Z",
+      "log_level": "command",
+      "stage": "build",
+      "message": "$ npm run build"
+    },
+    {
+      "id": 38,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:38:59.059Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "▲ Bundling application for production..."
+    },
+    {
+      "id": 39,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:00.464Z",
+      "log_level": "info",
+      "stage": "build",
+      "message": "✓ Created dist assets (chunks: 6, total: 342 kB gzip)"
+    },
+    {
+      "id": 40,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:01.275Z",
+      "log_level": "system",
+      "stage": "containerize",
+      "message": "Creating container image deployhub/create-react-app:42e483f..."
+    },
+    {
+      "id": 41,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:02.281Z",
+      "log_level": "info",
+      "stage": "containerize",
+      "message": "Image digest: sha256:7f83b1a403019f... (size: 84MB)"
+    },
+    {
+      "id": 42,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:03.085Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "Starting container sandbox on port :33894"
+    },
+    {
+      "id": 43,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:03.997Z",
+      "log_level": "info",
+      "stage": "health_check",
+      "message": "Probing GET /api/health -> HTTP 200 OK (latency: 12ms)"
+    },
+    {
+      "id": 44,
+      "deployment_id": "dep_1790249933281_t08r",
+      "timestamp": "2026-09-24T11:39:04.606Z",
+      "log_level": "system",
+      "stage": "health_check",
+      "message": "✨ Deployment successfully routed to Edge Anycast: https://create-react-app.deployhub.app"
+    }
+  ],
+  "environment_variables": [
+    {
+      "id": "env_1",
+      "project_id": "proj_nexus_ai",
+      "key": "DATABASE_URL",
+      "value": "postgres://nexus_admin:supersecret@db.cloud.deployhub:5432/nexus_prod",
+      "environment": "production",
+      "is_secret": true,
+      "created_at": "2026-09-24T10:28:56.189Z"
+    },
+    {
+      "id": "env_2",
+      "project_id": "proj_nexus_ai",
+      "key": "NEXT_PUBLIC_API_URL",
+      "value": "https://nexus-ai-studio.deployhub.app/api",
+      "environment": "production",
+      "is_secret": false,
+      "created_at": "2026-09-24T10:28:56.189Z"
+    },
+    {
+      "id": "env_3",
+      "project_id": "proj_nexus_ai",
+      "key": "OPENAI_API_KEY",
+      "value": "sk-proj-99214710123984019230912",
+      "environment": "production",
+      "is_secret": true,
+      "created_at": "2026-09-24T10:28:56.189Z"
+    },
+    {
+      "id": "env_4",
+      "project_id": "proj_solaris_pay",
+      "key": "STRIPE_WEBHOOK_SECRET",
+      "value": "whsec_9918239012489012",
+      "environment": "production",
+      "is_secret": true,
+      "created_at": "2026-09-24T10:28:56.189Z"
+    },
+    {
+      "id": "env_1790248216021_9y14",
+      "project_id": "proj_1790248216019_k5ei0",
+      "key": "NODE_ENV",
+      "value": "production",
+      "environment": "production",
+      "is_secret": false,
+      "created_at": "2026-09-24T11:10:16.021Z",
+      "updated_at": "2026-09-24T11:10:16.021Z"
+    },
+    {
+      "id": "env_1790248216022_fbr4",
+      "project_id": "proj_1790248216019_k5ei0",
+      "key": "DATABASE_URL",
+      "value": "postgresql://postgres:secret@db.deployhub:5432/main",
+      "environment": "production",
+      "is_secret": true,
+      "created_at": "2026-09-24T11:10:16.022Z",
+      "updated_at": "2026-09-24T11:10:16.022Z"
+    }
+  ]
+}
